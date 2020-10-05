@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const NotFoundError = require('../erros/404-not-found-err');
 const UnauthorizedError = require('../erros/401-unauthorized-err');
 // eslint-disable-next-line no-undef
-const { JWT_SECRET = 'dev-key' } = process.env
+const { NODE_ENV, JWT_SECRET = 'dev-key' } = process.env
 
 module.exports.getUser = (req,res,next) => {
   User.find({})
@@ -78,7 +78,11 @@ module.exports.login = (req,res,next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET , {expiresIn:'7d'})
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET: 'secret-key',
+        {expiresIn:'7d'})
+
         res.cookie('jwt', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
