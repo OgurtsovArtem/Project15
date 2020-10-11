@@ -30,7 +30,7 @@ router.post('/users', celebrate({
     about: Joi.string().required().min(2).max(30),
     password: Joi.string().required().min(8),
     email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: true } }),
-    avatar: Joi.string().required().regex(/[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?/),
+    avatar: Joi.string().required().regex(/^[-a-zA-Z0-9@:%_+.~#?&/=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&/=]*)?$/),
   }),
   params: Joi.object().keys({
     userId: Joi.string().alphanum().hex().length(24),
