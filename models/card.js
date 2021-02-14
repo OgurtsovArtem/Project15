@@ -19,7 +19,7 @@ const cardSchema = new mongoose.Schema({
   },
   likes: {
     // eslint-disable-next-line no-undef
-    type:  mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     default: [],
   },
   createdAt: {
